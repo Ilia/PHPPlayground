@@ -2,8 +2,6 @@
 
 namespace Radio;
 
-
-
 class Service
 {
   protected $selected_tuner;
@@ -20,6 +18,10 @@ class Service
     } else {
       throw new \Radio\Exceptions\AdapterException("Not adapter");
     }
+  }
+
+  public function __get($name){
+      return $this->$name;
   }
 
   public function __toString(){

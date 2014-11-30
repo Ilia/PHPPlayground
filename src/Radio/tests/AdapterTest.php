@@ -15,10 +15,14 @@ class AdapterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("Hello", $this->adapter->name);
     }
 
-    public function testAddTuner() {
+    public function testPassAddTuner() {
         $this->adapter->addTuner(new Generic('Tuner1', 1234));
-
         $this->assertCount(1, $this->adapter->tuners);
+    }
+
+    public function testFailAddTuner() {
+        $this->adapter->addTuner("Tuner");
+        $this->assertCount(0, $this->adapter->tuners);   
     }
 
     protected function tearDown() {
