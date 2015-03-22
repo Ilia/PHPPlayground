@@ -4,29 +4,33 @@ namespace Radio;
 
 class Service
 {
-  protected $selected_tuner;
+  private $tuner;
  
-  public function setTuner($adapter, $tuner){
-    if ($adapter instanceof \Radio\Adapter) {
-      foreach($adapter->tuners as $adapter_tuner){
-        if ("Radio\Tuners\\" . $tuner === get_class($adapter_tuner)){
-          $this->selected_tuner = $adapter_tuner;
-          return;
-        }
-      }
+  private $name;
+
+  public function setTuner(\Radio\Adapter $adapter, \Radio\AbstractTuner $tuner){
+    if(!in_array($tuner, $adapter->tuners)){
       throw new \Radio\Exceptions\NotFoundTunerException;
-    } else {
-      throw new \Radio\Exceptions\AdapterException("Not adapter");
     }
+
+    $this->tuner = $tuner;
   }
 
-  public function __get($name){
-      return $this->$name;
+  public function tuner(){
+    return $this->tuner;
+  }
+
+  public function setName($name){
+    return $this->name = $name;
+  }
+
+  public function name(){
+    return $this->$name;
   }
 
   public function __toString(){
-    if (isset($this->selected_tuner)){
-      return "Tuned to \"{$this->selected_tuner->name}\" [{$this->selected_tuner->frequency} kHz]";
+    if (isset($this->tuner)){
+      return "Tuned to \"{$this->tuner->name()}\" [{$this->tuner->frequency()} kHz]";
     }
   }
 }

@@ -2,8 +2,9 @@
 namespace Radio\Tuners;
 
 use Radio\TunerInterface;
+use Radio\AbstractTuner;
 
-class DAB extends Generic implements TunerInterface
+class DAB extends AbstractTuner implements TunerInterface
 {
     protected $services;
 
